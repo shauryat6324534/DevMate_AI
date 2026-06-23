@@ -1,0 +1,63 @@
+@import "tailwindcss";
+
+@theme {
+  --color-dark-bg: #090d16;
+  --color-dark-card: #111827;
+  --color-dark-border: #1f2937;
+  --color-dark-input: #1f2937;
+  
+  --color-brand-primary: #6366f1;
+  --color-brand-secondary: #10b981;
+  --color-brand-warning: #f59e0b;
+  --color-brand-error: #ef4444;
+  --color-brand-text: #f9fafb;
+  --color-brand-muted: #9ca3af;
+}
+
+@layer base {
+  body {
+    font-family: 'Outfit', 'Inter', sans-serif;
+    background-color: #090d16;
+    color: #f9fafb;
+    overflow-x: hidden;
+  }
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #090d16;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #1f2937;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #374151;
+}
+
+/* Custom Animations */
+@keyframes float {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+  100% { transform: translateY(0px); }
+}
+
+.animate-float {
+  animation: float 6s ease-in-out infinite;
+}
+
+/* Glow effects */
+.glow-indigo {
+  box-shadow: 0 0 40px -5px rgba(99, 102, 241, 0.15);
+}
+
+.glow-emerald {
+  box-shadow: 0 0 40px -5px rgba(16, 185, 129, 0.15);
+}
