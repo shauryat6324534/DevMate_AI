@@ -9,7 +9,13 @@
     "dev": "nodemon src/server.js",
     "db:init": "node src/utils/dbInit.js",
     "db:test": "node src/utils/testDb.js",
-    "auth:test": "node src/utils/testAuth.js"
+    "auth:test": "node src/utils/testAuth.js",
+    "ai:test": "node src/utils/testAi.js",
+    "nlu:test": "node src/utils/testNlu.js",
+    "conversations:test": "node src/utils/testConversations.js",
+    "messages:test": "node src/utils/testMessages.js",
+    "history:test": "node src/utils/testHistory.js",
+    "explain:test": "node src/utils/testExplain.js"
   },
   "dependencies": {
     "bcryptjs": "^3.0.3",

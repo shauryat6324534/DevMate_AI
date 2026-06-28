@@ -22,7 +22,11 @@ export const config = {
     connectionLimit: parseInt(process.env.DB_CONNECTION_LIMIT, 10) || 10
   },
   ai: {
-    openRouterApiKey: process.env.OPENROUTER_API_KEY || ''
+    openRouterApiKey: process.env.OPENROUTER_API_KEY || '',
+    openRouterBaseUrl: process.env.OPENROUTER_BASE_URL || 'https://openrouter.ai/api/v1',
+    primaryModel: process.env.PRIMARY_MODEL || 'qwen/qwen3-coder:free',
+    fallbackModel: process.env.FALLBACK_MODEL || 'deepseek/deepseek-v4-flash:free',
+    maxRetries: parseInt(process.env.AI_MAX_RETRIES, 10) || 3
   }
 };
 

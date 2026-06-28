@@ -6,5 +6,6 @@ const router = express.Router();
 
 router.use(protect);
 router.get('/', historyController.getHistory);
+router.get('/:id', historyController.getHistoryById);
 
 export default router;
