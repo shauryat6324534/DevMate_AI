@@ -15,7 +15,8 @@
     "conversations:test": "node src/utils/testConversations.js",
     "messages:test": "node src/utils/testMessages.js",
     "history:test": "node src/utils/testHistory.js",
-    "explain:test": "node src/utils/testExplain.js"
+    "explain:test": "node src/utils/testExplain.js",
+    "debug:test": "node src/utils/testDebug.js"
   },
   "dependencies": {
     "bcryptjs": "^3.0.3",

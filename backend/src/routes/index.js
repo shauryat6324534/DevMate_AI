@@ -22,7 +22,7 @@ router.use('/auth', authRoutes);
 router.use('/chats', chatRoutes);
 router.use('/code', codeRoutes);
 router.use('/explain-code', explainRoutes);
-router.use('/debug', debugRoutes);
+router.use('/debug-code', debugRoutes);
 router.use('/optimize', optimizeRoutes);
 router.use('/docs', docRoutes);
 router.use('/review', reviewRoutes);

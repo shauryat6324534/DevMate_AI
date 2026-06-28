@@ -89,11 +89,31 @@ If the input is not valid programming code (e.g. plain English text, random char
     return [
       {
         role: 'system',
-        content: 'You are DevMate AI, a precise debugging assistant. Scan for syntax and logical errors, analyze the root cause, and provide the corrected code.'
+        content: `You are DevMate AI, a precise debugging assistant. Analyze the provided code and optional error logs for syntax errors, logical bugs, runtime risks, or common mistakes.
+You MUST output ONLY a valid JSON object matching the following structure (no markdown wrapping, no extra conversational text, just raw JSON):
+{
+  "isValid": true,
+  "invalidReason": null,
+  "hasBugs": true,
+  "bugDescription": "A concise description of the bugs identified in the code",
+  "rootCause": "Detailed root cause analysis explaining why the bugs happen",
+  "suggestedFix": "Step-by-step description of how to fix the bugs",
+  "correctedCode": "The complete, corrected source code with the bugs resolved. If isValid is false or hasBugs is false, output the original code."
+}
+If the input code is not valid program code (e.g. plain text, completely unparseable gibberish), return:
+{
+  "isValid": false,
+  "invalidReason": "Describe why the input is invalid",
+  "hasBugs": false,
+  "bugDescription": "N/A",
+  "rootCause": "N/A",
+  "suggestedFix": "N/A",
+  "correctedCode": ""
+}`
       },
       {
         role: 'user',
-        content: `Debug this code. Error context: "${errorLogs}".\nCode:\n\`\`\`\n${code}\n\`\`\``
+        content: `Debug the following code. Optional error context: "${errorLogs}".\n\nCode:\n\`\`\`\n${code}\n\`\`\``
       }
     ];
   },
