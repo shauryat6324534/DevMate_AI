@@ -20,13 +20,18 @@
     "optimize:test": "node src/utils/testOptimize.js",
     "docs:test": "node src/utils/testDocs.js",
     "review:test": "node src/utils/testReview.js",
-    "learning:test": "node src/utils/testLearning.js"
+    "learning:test": "node src/utils/testLearning.js",
+    "chats:test": "node src/utils/testChats.js",
+    "download:test": "node src/utils/testDownloads.js",
+    "profile:test": "node src/utils/testProfile.js",
+    "security:test": "node src/utils/testSecurity.js"
   },
   "dependencies": {
     "bcryptjs": "^3.0.3",
     "cors": "^2.8.5",
     "dotenv": "^16.4.5",
     "express": "^4.21.2",
+    "express-rate-limit": "^8.5.2",
     "helmet": "^8.0.0",
     "jsonwebtoken": "^9.0.3",
     "morgan": "^1.10.0",

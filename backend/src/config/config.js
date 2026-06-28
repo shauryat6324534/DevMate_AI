@@ -30,4 +30,13 @@ export const config = {
   }
 };
 
+// Fail fast on missing critical configurations in production mode
+if (config.env === 'production') {
+  const criticalEnvVars = ['JWT_SECRET', 'OPENROUTER_API_KEY', 'DB_HOST', 'DB_USER', 'DB_NAME'];
+  const missing = criticalEnvVars.filter(key => !process.env[key]);
+  if (missing.length > 0) {
+    throw new Error(`CRITICAL CONFIGURATION ERROR: Missing required environment variables in production mode: ${missing.join(', ')}`);
+  }
+}
+
 export default config;

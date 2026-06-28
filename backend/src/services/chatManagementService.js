@@ -81,7 +81,7 @@ export const chatManagementService = {
       `SELECT id, title, created_at as createdAt 
        FROM conversations 
        WHERE user_id = ? 
-       ORDER BY created_at ${orderClause} 
+       ORDER BY created_at ${orderClause}, id ${orderClause} 
        LIMIT ${parseInt(limit, 10)} OFFSET ${parseInt(offset, 10)}`,
       [userId]
     );

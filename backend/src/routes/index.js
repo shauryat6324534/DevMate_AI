@@ -14,23 +14,33 @@ import historyRoutes from './historyRoutes.js';
 import generateCodeRoutes from './generateCodeRoutes.js';
 import conversationRoutes from './conversationRoutes.js';
 import messageRoutes from './messageRoutes.js';
+import profileRoutes from './profileRoutes.js';
+import { authLimiter, aiLimiter, profileLimiter } from '../middleware/rateLimitMiddleware.js';
 
 const router = express.Router();
 
 router.use('/health', healthRoutes);
-router.use('/auth', authRoutes);
-router.use('/chats', chatRoutes);
-router.use('/code', codeRoutes);
-router.use('/explain-code', explainRoutes);
-router.use('/debug-code', debugRoutes);
-router.use('/optimize-code', optimizationRoutes);
+router.use('/auth', authLimiter, authRoutes);
+router.use('/chats', chatManagementRoutes);
+router.use('/code', aiLimiter, codeRoutes);
+router.use('/explain-code', aiLimiter, explainRoutes);
+router.use('/debug-code', aiLimiter, debugRoutes);
+router.use('/optimize-code', aiLimiter, optimizationRoutes);
+
+// Apply AI rate limiter specifically to documentation paths
+router.use('/generate-readme', aiLimiter);
+router.use('/generate-function-docs', aiLimiter);
+router.use('/generate-api-docs', aiLimiter);
+router.use('/generate-comments', aiLimiter);
 router.use('/', documentationRoutes);
-router.use('/review-code', reviewRoutes);
-router.use('/learning-assistant', learningRoutes);
-router.use('/downloads', downloadRoutes);
+
+router.use('/review-code', aiLimiter, reviewRoutes);
+router.use('/learning-assistant', aiLimiter, learningRoutes);
+router.use('/download', downloadRoutes);
 router.use('/history', historyRoutes);
-router.use('/generate-code', generateCodeRoutes);
+router.use('/generate-code', aiLimiter, generateCodeRoutes);
 router.use('/conversations', conversationRoutes);
 router.use('/messages', messageRoutes);
+router.use('/profile', profileLimiter, profileRoutes);
 
 export default router;
