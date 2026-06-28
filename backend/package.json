@@ -16,7 +16,11 @@
     "messages:test": "node src/utils/testMessages.js",
     "history:test": "node src/utils/testHistory.js",
     "explain:test": "node src/utils/testExplain.js",
-    "debug:test": "node src/utils/testDebug.js"
+    "debug:test": "node src/utils/testDebug.js",
+    "optimize:test": "node src/utils/testOptimize.js",
+    "docs:test": "node src/utils/testDocs.js",
+    "review:test": "node src/utils/testReview.js",
+    "learning:test": "node src/utils/testLearning.js"
   },
   "dependencies": {
     "bcryptjs": "^3.0.3",

@@ -13,11 +13,14 @@ export const sendSuccess = (res, data, status = 200, message = 'Success') => {
  * Standardized error response formatter.
  */
 export const sendError = (res, error, status = 500, details = null) => {
-  return res.status(status).json({
+  const payload = {
     success: false,
-    error: typeof error === 'string' ? error : error.message || 'Internal Server Error',
-    details
-  });
+    error: typeof error === 'string' ? error : error.message || 'Internal Server Error'
+  };
+  if (details !== null && details !== undefined) {
+    payload.details = details;
+  }
+  return res.status(status).json(payload);
 };
 
 export default {

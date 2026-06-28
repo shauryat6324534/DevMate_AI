@@ -8,8 +8,8 @@ export const globalErrorHandler = (err, req, res, next) => {
   const statusCode = err.statusCode || 500;
   const message = err.message || 'An unexpected error occurred';
   
-  // Only expose stacks/details in development
-  const details = config.env === 'development' ? err.stack : null;
+  // Never expose stacks/details to client
+  const details = null;
 
   return sendError(res, message, statusCode, details);
 };

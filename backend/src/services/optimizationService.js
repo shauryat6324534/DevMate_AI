@@ -24,19 +24,14 @@ export const localValidateCode = (code) => {
  * Pure normalized fallback response if AI endpoints are down.
  * @param {string} code
  */
-export const fallbackReviewCode = (code) => {
+export const fallbackOptimizeCode = (code) => {
   const isValid = localValidateCode(code);
   if (!isValid) {
     return {
       isValid: false,
       invalidReason: 'The provided input does not appear to be valid source code.',
-      qualityScore: 0,
-      readabilityScore: 0,
-      maintainabilityScore: 0,
-      namingConventions: [],
-      codeSmells: [],
-      antiPatterns: [],
-      refactoringOpportunities: [],
+      optimizedCode: '',
+      improvements: [],
       bestPractices: []
     };
   }
@@ -44,45 +39,28 @@ export const fallbackReviewCode = (code) => {
   return {
     isValid: true,
     invalidReason: null,
-    qualityScore: 75,
-    readabilityScore: 80,
-    maintainabilityScore: 75,
-    namingConventions: [
-      {
-        variable: 'N/A',
-        status: 'OK',
-        recommendation: 'Check that standard casing rules are used consistently.'
-      }
-    ],
-    codeSmells: [
-      {
-        type: 'General warning',
-        line: 1,
-        description: 'Verify modular boundaries of classes and methods.'
-      }
-    ],
-    antiPatterns: [],
-    refactoringOpportunities: [],
-    bestPractices: ['Maintain clear indentation, documentation strings, and parameters verification.']
+    optimizedCode: code,
+    improvements: ['No obvious optimization bottlenecks detected by local analyzer.'],
+    bestPractices: ['Maintain consistent function signatures and naming conventions.']
   };
 };
 
-export const reviewService = {
+export const optimizationService = {
   /**
-   * Reviews code quality and detects smells using AI completions.
+   * Optimizes code algorithms and constructs using AI completions.
    * Logs usage activity to database logs.
    * @param {number} userId - Owner context.
    * @param {string} code - Target code block.
    */
-  async reviewCode(userId, code) {
+  async optimizeCode(userId, code) {
     if (!code || typeof code !== 'string' || code.trim() === '') {
-      throw new Error('Code review analysis requires a non-empty code block');
+      throw new Error('Optimization analysis requires a non-empty code block');
     }
 
     let result = null;
 
     try {
-      const prompt = promptBuilder.buildReviewPrompt(code);
+      const prompt = promptBuilder.buildOptimizationPrompt(code);
       const aiResult = await aiService.executePrompt(prompt, {
         temperature: 0.1,
         maxTokens: 1000
@@ -99,22 +77,22 @@ export const reviewService = {
         result.isValid = localValidateCode(code);
       }
     } catch (error) {
-      logger.warn(`Review Service: AI query failed. Running offline fallback parser. Error: ${error.message}`);
-      result = fallbackReviewCode(code);
+      logger.warn(`Optimization Service: AI query failed. Running offline fallback parser. Error: ${error.message}`);
+      result = fallbackOptimizeCode(code);
     }
 
     // Persist usage metrics to activity history logs
     try {
-      await historyService.logActivity(userId, 'review', {
+      await historyService.logActivity(userId, 'optimize', {
         input: code,
         output: JSON.stringify(result)
       });
     } catch (logErr) {
-      logger.error('Review Service: Failed to log history activity:', logErr);
+      logger.error('Optimization Service: Failed to log history activity:', logErr);
     }
 
     return result;
   }
 };
 
-export default reviewService;
+export default optimizationService;

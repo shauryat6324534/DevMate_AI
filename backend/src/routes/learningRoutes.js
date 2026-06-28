@@ -5,6 +5,6 @@ import protect from '../middleware/authMiddleware.js';
 const router = express.Router();
 
 router.use(protect);
-router.post('/concept', learningController.explainConcept);
+router.post('/', learningController.askAssistant);
 
 export default router;

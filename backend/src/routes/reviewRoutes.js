@@ -5,6 +5,6 @@ import protect from '../middleware/authMiddleware.js';
 const router = express.Router();
 
 router.use(protect);
-router.post('/review', reviewController.reviewCode);
+router.post('/', reviewController.reviewCode);
 
 export default router;
