@@ -12,10 +12,12 @@ export const protect = async (req, res, next) => {
   let token;
 
   try {
-    // 1. Extract Bearer token from headers
+    // 1. Extract Bearer token from headers or query parameters
     const authHeader = req.headers.authorization;
     if (authHeader && authHeader.startsWith('Bearer ')) {
       token = authHeader.split(' ')[1];
+    } else if (req.query && req.query.token) {
+      token = req.query.token;
     }
 
     if (!token) {

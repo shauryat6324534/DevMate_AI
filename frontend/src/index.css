@@ -1,63 +1,202 @@
 @import "tailwindcss";
 
+@variant light (.light &);
+
 @theme {
-  --color-dark-bg: #090d16;
-  --color-dark-card: #111827;
-  --color-dark-border: #1f2937;
-  --color-dark-input: #1f2937;
+  /* Override Default Gray, Slate, and Zinc scales to match #2B2F36 palette */
+  --color-gray-50: #F2F2F2;
+  --color-gray-100: #F2F2F2; /* Primary Text */
+  --color-gray-200: #B6BDC8; /* Secondary Text */
+  --color-gray-300: #B6BDC8;
+  --color-gray-400: #6D7C93; /* Muted Blue/Grey */
+  --color-gray-500: #6D7C93;
+  --color-gray-600: #4A515C; /* Borders */
+  --color-gray-700: #3E444D; /* Card Background */
+  --color-gray-800: #353A42; /* Secondary Surface */
+  --color-gray-900: #2B2F36; /* Primary Background */
+  --color-gray-950: #1C1E22; /* Deeper Background for sidebar / inputs */
+
+  --color-slate-50: #F2F2F2;
+  --color-slate-100: #F2F2F2;
+  --color-slate-200: #B6BDC8;
+  --color-slate-300: #B6BDC8;
+  --color-slate-400: #6D7C93;
+  --color-slate-500: #6D7C93;
+  --color-slate-600: #4A515C;
+  --color-slate-700: #3E444D;
+  --color-slate-800: #353A42;
+  --color-slate-900: #2B2F36;
+  --color-slate-950: #1C1E22;
+
+  --color-zinc-50: #F2F2F2;
+  --color-zinc-100: #F2F2F2;
+  --color-zinc-200: #B6BDC8;
+  --color-zinc-300: #B6BDC8;
+  --color-zinc-400: #6D7C93;
+  --color-zinc-500: #6D7C93;
+  --color-zinc-600: #4A515C;
+  --color-zinc-700: #3E444D;
+  --color-zinc-800: #353A42;
+  --color-zinc-900: #2B2F36;
+  --color-zinc-950: #1C1E22;
+
+  /* Map Indigo (the main brand color in components) to Accent Green */
+  --color-indigo-50: #f4fce3;
+  --color-indigo-100: #e2f9be;
+  --color-indigo-200: #c9f493;
+  --color-indigo-300: #B7F36B;
+  --color-indigo-400: #A7E45F;
+  --color-indigo-500: #B7F36B;
+  --color-indigo-600: #B7F36B;
+  --color-indigo-700: #A7E45F;
+  --color-indigo-800: #8ec43f;
+  --color-indigo-900: #78a42f;
+  --color-indigo-950: #3b5311;
+
+  --color-emerald-500: #B7F36B;
+  --color-emerald-600: #B7F36B;
+  --color-emerald-700: #A7E45F;
+
+  /* Component tokens */
+  --color-dark-bg: #2B2F36;
+  --color-dark-card: #3E444D;
+  --color-dark-border: #4A515C;
+  --color-dark-input: #353A42;
   
-  --color-brand-primary: #6366f1;
-  --color-brand-secondary: #10b981;
+  --color-brand-primary: #B7F36B;
+  --color-brand-secondary: #B7F36B;
   --color-brand-warning: #f59e0b;
   --color-brand-error: #ef4444;
-  --color-brand-text: #f9fafb;
-  --color-brand-muted: #9ca3af;
+  --color-brand-text: #F2F2F2;
+  --color-brand-muted: #B6BDC8;
 }
 
 @layer base {
   body {
     font-family: 'Outfit', 'Inter', sans-serif;
-    background-color: #090d16;
-    color: #f9fafb;
+    background-color: #2B2F36;
+    color: #F2F2F2;
     overflow-x: hidden;
   }
 }
 
-/* Custom Scrollbar */
+/* Light Mode Overrides */
+.light, .light body {
+  background-color: #f9fafb !important;
+  color: #111827 !important;
+}
+
+.light header {
+  background-color: rgba(255, 255, 255, 0.8) !important;
+  border-color: #e5e7eb !important;
+}
+
+.light header span.text-white {
+  color: #111827 !important;
+}
+
+.light header button,
+.light header div {
+  color: #374151 !important;
+}
+
+.light aside {
+  background-color: #ffffff !important;
+  border-color: #e5e7eb !important;
+  color: #374151 !important;
+}
+
+.light aside button,
+.light aside div,
+.light aside span {
+  color: #374151 !important;
+}
+
+.light .flex-1.bg-\[\#0b0f19\],
+.light .bg-\[\#2B2F36\] {
+  background-color: #f3f4f6 !important;
+}
+
+.light .bg-gray-900\/80,
+.light .bg-\[\#2B2F36\]\/80 {
+  background-color: #ffffff !important;
+  border-color: #e5e7eb !important;
+  color: #111827 !important;
+}
+
+.light .text-gray-300,
+.light .text-gray-200 {
+  color: #1f2937 !important;
+}
+
+.light .text-gray-400,
+.light .text-gray-500 {
+  color: #4b5563 !important;
+}
+
+.light pre {
+  background-color: #f3f4f6 !important;
+  border-color: #e5e7eb !important;
+  color: #111827 !important;
+}
+
+/* Hardcoded hex overrides for new professional dark UI */
+.bg-\[\#090d16\] {
+  background-color: #2B2F36 !important;
+}
+
+.bg-\[\#090d16\]\/80 {
+  background-color: rgba(43, 47, 54, 0.8) !important;
+}
+
+.bg-\[\#090d16\]\/40 {
+  background-color: rgba(43, 47, 54, 0.4) !important;
+}
+
+.bg-\[\#0b0f19\] {
+  background-color: #2B2F36 !important;
+}
+
+.bg-\[\#0d1117\] {
+  background-color: #353A42 !important;
+}
+
+/* Selection styles */
+::selection {
+  background-color: #B7F36B;
+  color: #2B2F36;
+}
+
+/* Custom Scrollbar matching Gray palette */
 ::-webkit-scrollbar {
   width: 8px;
   height: 8px;
 }
 
 ::-webkit-scrollbar-track {
-  background: #090d16;
+  background: #2B2F36;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #1f2937;
+  background: #4A515C;
   border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #374151;
+  background: #454C56;
 }
 
-/* Custom Animations */
-@keyframes float {
-  0% { transform: translateY(0px); }
-  50% { transform: translateY(-10px); }
-  100% { transform: translateY(0px); }
+/* Hover class overrides */
+.hover\:bg-gray-800:hover {
+  background-color: #454C56 !important;
 }
 
-.animate-float {
-  animation: float 6s ease-in-out infinite;
+.hover\:bg-gray-700:hover {
+  background-color: #454C56 !important;
 }
 
-/* Glow effects */
-.glow-indigo {
-  box-shadow: 0 0 40px -5px rgba(99, 102, 241, 0.15);
-}
-
-.glow-emerald {
-  box-shadow: 0 0 40px -5px rgba(16, 185, 129, 0.15);
+/* Accent element color corrections */
+button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
 }

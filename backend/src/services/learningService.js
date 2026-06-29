@@ -27,6 +27,62 @@ export const fallbackLearningResponse = (prompt) => {
   };
 };
 
+const formatLearningResponseToMarkdown = (result) => {
+  const explanation = result.explanation || '';
+  const path = Array.isArray(result.learningPath)
+    ? result.learningPath.map(s => `- ${s}`).join('\n')
+    : '';
+  const exercises = Array.isArray(result.exercises)
+    ? result.exercises.map(e => `#### ${e.title}\n${e.description}\n\n\`\`\`javascript\n${e.codeTemplate}\n\`\`\``).join('\n\n')
+    : '';
+  const response = result.response || '';
+
+  return `${response}\n\n### Conceptual Explanation\n${explanation}\n\n### Suggested Learning Path\n${path}\n\n### Practice Exercises\n${exercises}`;
+};
+
+const attemptRepairJSON = (text) => {
+  let cleaned = text.trim();
+
+  // 1. Remove markdown code block wrapping if present
+  if (cleaned.startsWith('```')) {
+    cleaned = cleaned.replace(/^```(json)?/, '').replace(/```$/, '').trim();
+  }
+
+  // 2. Trim leading text before the first '{' and trailing text after the last '}'
+  const firstBrace = cleaned.indexOf('{');
+  const lastBrace = cleaned.lastIndexOf('}');
+  if (firstBrace !== -1 && lastBrace !== -1 && lastBrace > firstBrace) {
+    cleaned = cleaned.substring(firstBrace, lastBrace + 1);
+  }
+
+  // 3. Fix unescaped newlines and common malformed structures inside double quotes
+  cleaned = cleaned.replace(/,\s*}/g, '}').replace(/,\s*\]/g, ']');
+
+  try {
+    return JSON.parse(cleaned);
+  } catch (err) {
+    try {
+      let inQuote = false;
+      let chars = cleaned.split('');
+      for (let i = 0; i < chars.length; i++) {
+        if (chars[i] === '"' && (i === 0 || chars[i - 1] !== '\\')) {
+          inQuote = !inQuote;
+        } else if (inQuote && chars[i] === '\n') {
+          chars[i] = '\\n';
+        } else if (inQuote && chars[i] === '\r') {
+          chars[i] = '\\r';
+        } else if (inQuote && chars[i] === '\t') {
+          chars[i] = '\\t';
+        }
+      }
+      cleaned = chars.join('');
+      return JSON.parse(cleaned);
+    } catch (innerErr) {
+      return null;
+    }
+  }
+};
+
 export const learningService = {
   /**
    * Prompts the AI programming assistant, maintaining conversation context threads.
@@ -60,29 +116,66 @@ export const learningService = {
     }
 
     let result = null;
+    const aiPrompt = promptBuilder.buildLearningPrompt(prompt, historyMessages);
 
-    try {
-      const aiPrompt = promptBuilder.buildLearningPrompt(prompt, historyMessages);
-      const aiResult = await aiService.executePrompt(aiPrompt, {
-        temperature: 0.2,
-        maxTokens: 1200
-      });
+    const tryProcessResponse = (rawText) => {
+      logger.info(`Learning Assistant Service: Raw AI Response received: ${rawText}`);
 
-      let cleanedText = aiResult.text.trim();
+      let cleanedText = rawText.trim();
       if (cleanedText.startsWith('```')) {
         cleanedText = cleanedText.replace(/^```(json)?/, '').replace(/```$/, '').trim();
       }
 
-      result = JSON.parse(cleanedText);
-    } catch (err) {
-      logger.warn(`Learning Assistant Service: AI query failed. Running offline fallback. Error: ${err.message}`);
-      result = fallbackLearningResponse(prompt);
+      try {
+        return JSON.parse(cleanedText);
+      } catch (parseError) {
+        logger.warn(`Learning Assistant Service: Initial JSON.parse failed. Error: ${parseError.message}. Attempting repair...`);
+        const repaired = attemptRepairJSON(rawText);
+        if (repaired) {
+          logger.info("Learning Assistant Service: JSON repair succeeded!");
+          return repaired;
+        }
+        throw parseError;
+      }
+    };
+
+    try {
+      const aiResult = await aiService.executePrompt(aiPrompt, {
+        temperature: 0.2,
+        maxTokens: 1200
+      });
+      result = tryProcessResponse(aiResult.text);
+    } catch (firstAttemptError) {
+      logger.warn(`Learning Assistant Service: First AI attempt or parsing failed: ${firstAttemptError.message}. Retrying once with extra guidance...`);
+
+      try {
+        const retryPrompt = JSON.parse(JSON.stringify(aiPrompt));
+        if (retryPrompt.length > 0 && retryPrompt[0].role === 'system') {
+          retryPrompt[0].content += "\nReturn ONLY valid JSON. Do not include markdown, explanations, or any extra text.";
+        } else {
+          retryPrompt.push({
+            role: 'system',
+            content: "Return ONLY valid JSON. Do not include markdown, explanations, or any extra text."
+          });
+        }
+
+        const aiResultRetry = await aiService.executePrompt(retryPrompt, {
+          temperature: 0.1,
+          maxTokens: 1200
+        });
+
+        result = tryProcessResponse(aiResultRetry.text);
+      } catch (retryError) {
+        logger.error(`Learning Assistant Service: AI query and retry both failed. Running offline fallback. Error: ${retryError.message}`);
+        result = fallbackLearningResponse(prompt);
+      }
     }
 
     // Save messages in chronological conversation thread
     try {
       await messageService.saveMessage(activeConversationId, 'user', prompt);
-      await messageService.saveMessage(activeConversationId, 'ai', result.response || JSON.stringify(result));
+      const savedContent = formatLearningResponseToMarkdown(result);
+      await messageService.saveMessage(activeConversationId, 'ai', savedContent);
     } catch (msgErr) {
       logger.error('Learning Assistant Service: Failed to persist conversation messages:', msgErr);
     }
