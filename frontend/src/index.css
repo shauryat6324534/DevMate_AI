@@ -128,11 +128,11 @@ header.sticky {
   color: #1F2937 !important;            /* High contrast dark text */
 }
 
-/* Navbar: White surface, bottom border, soft shadow */
+/* Navbar: Premium surface, warm white / soft neutral, subtle bottom border & very light elevation shadow */
 .light header.sticky {
   background-color: #FCFCFD !important;
   border-bottom: 1px solid #E5E7EB !important;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05), 0 1px 2px rgba(0, 0, 0, 0.03) !important;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.02), 0 1px 0 0 rgba(0, 0, 0, 0.01) !important;
 }
 
 .light header span,
@@ -141,11 +141,11 @@ header.sticky {
   color: #1F2937 !important;
 }
 
-/* Sidebar: Slightly tinted background (light gray), right border, distinct from workspace */
+/* Sidebar: Slightly darker neutral surface than navbar, right border, flat style */
 .light aside:not(.border-l) {
-  background-color: #F9FAFB !important; /* Slightly tinted distinct gray */
+  background-color: #F7F8FA !important; /* Tinted distinct warm neutral */
   border-right: 1px solid #E5E7EB !important;
-  box-shadow: 1px 0 3px rgba(0, 0, 0, 0.02) !important;
+  box-shadow: none !important;
   padding: 1.25rem !important;
 }
 
@@ -174,25 +174,38 @@ header.sticky {
   color: #1F2937 !important;
 }
 
-/* Main Workspace: very light gray page background, not pure white */
+/* Main Workspace: Pure white canvas to feel clean and spacious */
 .light .flex-1.bg-\[\#0b0f19\],
 .light .bg-\[\#2B2F36\],
 .light main {
-  background-color: #F7F8FA !important; /* Soft warm workspace tone */
+  background-color: #FFFFFF !important; /* Brightest canvas in the workspace */
+}
+
+/* AI Message Bubble contrast adjustments for pure white workspace canvas */
+.light .max-w-3xl.mx-auto.space-y-6 div.bg-gray-900\/80 {
+  background-color: #F9FAFB !important; /* Soft gray contrast background */
+  border: 1px solid #E5E7EB !important;
 }
 
 /* Analysis Panel: Own surface color, left border, slight contrast against workspace */
 .light aside.border-l {
-  background-color: #FCFCFD !important; /* Distinct surface color */
+  background-color: #FAFAFB !important; /* Distinct surface color */
   border-left: 1px solid #E5E7EB !important;
   box-shadow: -1px 0 3px rgba(0, 0, 0, 0.02) !important;
 }
 
-/* Input Area Bottom Editor: Separate background dock, top border */
+/* Match internal components (header/footer) of Analysis Panel to panel background color */
+.light aside.border-l div.bg-gray-950,
+.light aside.border-l div.bg-gray-950\/60 {
+  background-color: #FAFAFB !important;
+  border-color: #E5E7EB !important;
+}
+
+/* Input Area Bottom Editor: Dedicated input dock background, soft top border */
 .light .p-4.border-t.backdrop-blur-md,
 .light .p-4.border-t.bg-\[\#090d16\]\/40 {
   border-top: 1px solid #E5E7EB !important;
-  background-color: #FCFCFD !important; /* Looks like its own dock */
+  background-color: #F5F6F8 !important; /* Subtle dock surface */
 }
 
 /* Inner Textarea wrapper element styling */
@@ -312,6 +325,79 @@ header.sticky {
 }
 
 /* ==========================================
+   Accessibility Contrast and Polish Overrides
+   ========================================== */
+/* Accessibility contrast for sub-cards and panels */
+.light .bg-gray-950\/60,
+.light .bg-gray-950\/40,
+.light .bg-gray-900\/60,
+.light .bg-gray-900\/40,
+.light .bg-gray-900\/20 {
+  background-color: #F3F4F6 !important; /* Soft warm gray tint */
+  border-color: #E5E7EB !important;
+  color: #1F2937 !important;
+}
+
+.light .bg-gray-950\/60 *,
+.light .bg-gray-950\/40 *,
+.light .bg-gray-900\/60 *,
+.light .bg-gray-900\/40 *,
+.light .bg-gray-900\/20 * {
+  color: #1F2937 !important;
+}
+
+.light .hover\:bg-gray-950:hover {
+  background-color: #E5E7EB !important;
+}
+
+/* Keep text-transparent gradient text from being flattened to gray solid text, with rich light gradient */
+.light .text-transparent.bg-gradient-to-r {
+  color: transparent !important;
+  -webkit-background-clip: text !important;
+  background-clip: text !important;
+  background-image: linear-gradient(to right, #4f46e5, #7c3aed, #db2777) !important;
+}
+
+/* Accessible contrast colors for interactive elements */
+.light .text-indigo-300,
+.light .text-indigo-400,
+.light .text-indigo-500,
+.light .text-indigo-600,
+.light .text-brand-primary {
+  color: #15803d !important; /* WCAG AAA Green brand color */
+}
+
+.light .text-purple-400,
+.light .text-purple-500 {
+  color: #6d28d9 !important; /* Rich readable purple */
+}
+
+.light .text-emerald-400,
+.light .text-emerald-500 {
+  color: #047857 !important; /* Rich readable emerald */
+}
+
+.light .border-indigo-950\/60 {
+  border-color: rgba(22, 163, 74, 0.2) !important;
+}
+.light .border-purple-850\/60,
+.light .border-purple-950\/60 {
+  border-color: rgba(109, 40, 217, 0.2) !important;
+}
+.light .border-emerald-950\/60 {
+  border-color: rgba(4, 120, 87, 0.2) !important;
+}
+
+.light .bg-indigo-950\/20 {
+  background-color: rgba(22, 163, 74, 0.08) !important;
+  border-color: rgba(22, 163, 74, 0.2) !important;
+}
+.light .bg-purple-950\/20 {
+  background-color: rgba(109, 40, 217, 0.08) !important;
+  border-color: rgba(109, 40, 217, 0.2) !important;
+}
+
+/* ==========================================
    Button and Element Contrast Adjustments
    ========================================== */
 .bg-indigo-600,
@@ -362,7 +448,7 @@ form textarea {
 
 /* User and AI bubbles */
 .max-w-3xl.mx-auto.space-y-6 div.max-w-\[85\%\] {
-  max-w-[78%] !important;
+  max-width:78% !important;
   padding: 1.25rem 1.5rem !important; /* Premium internal padding */
   border-radius: 16px !important;
   box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05) !important;
@@ -496,4 +582,47 @@ button.bg-gray-900:hover,
 button.bg-gray-800:hover {
   background-color: #282A2E !important;
   border-color: #3E4146 !important;
+}
+
+/* ==========================================
+   Chat Composer Styling Refinement (Visual Polish)
+   ========================================== */
+/* Issue 1 — Placeholder Readability */
+/* Dark Mode Placeholder */
+.bg-gray-900.border.border-gray-800 textarea::placeholder {
+  color: #9CA3AF !important; /* Crisp, readable muted gray (65-75% contrast) */
+  opacity: 1 !important;
+}
+
+/* Light Mode Placeholder Override */
+.light .bg-gray-900.border.border-gray-800 textarea::placeholder {
+  color: #6D7C93 !important; /* High contrast muted gray-blue for white background */
+}
+
+/* Issue 2 — Focus States and Transition */
+/* Disable default borders/outlines on the inner textarea itself to prevent dual outline */
+.bg-gray-900.border.border-gray-800 textarea,
+.bg-gray-900.border.border-gray-800 textarea:focus,
+.bg-gray-900.border.border-gray-800 textarea:focus-visible {
+  border: none !important;
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+/* Apply single, soft, rounded focus ring and border state transition on the composer wrapper div */
+.bg-gray-900.border.border-gray-800 {
+  border-radius: 1rem !important; /* 16px to match rounded-2xl geometry exactly */
+  transition: border-color 200ms ease-in-out, box-shadow 200ms ease-in-out !important;
+}
+
+/* Dark Mode Wrapper Focus state */
+.bg-gray-900.border.border-gray-800:focus-within {
+  border-color: rgba(183, 243, 107, 0.4) !important; /* Soft brand color border */
+  box-shadow: 0 0 0 3px rgba(183, 243, 107, 0.15) !important; /* Soft, low-opacity focus ring */
+}
+
+/* Light Mode Wrapper Focus state override */
+.light .bg-gray-900.border.border-gray-800:focus-within {
+  border-color: rgba(183, 243, 107, 0.6) !important;
+  box-shadow: 0 0 0 3px rgba(183, 243, 107, 0.25), inset 0 1px 2px rgba(0, 0, 0, 0.02) !important;
 }
