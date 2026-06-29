@@ -190,7 +190,7 @@ export const DashboardPage = ({ token, user, theme, toggleTheme, onLogout }) => 
   };
 
   return (
-    <div className="min-h-screen flex flex-col bg-[#090d16] text-gray-100 font-sans selection:bg-indigo-500 selection:text-white">
+    <div className="h-screen flex flex-col bg-[#090d16] text-gray-100 font-sans selection:bg-indigo-500 selection:text-white overflow-hidden">
       {/* Navbar header */}
       <Navbar 
         user={user} 

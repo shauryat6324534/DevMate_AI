@@ -158,7 +158,7 @@ export const ResultPanel = ({ code, token }) => {
 
   if (!code) {
     return (
-      <aside className="w-96 bg-gray-950 border-l border-gray-800/80 p-6 flex flex-col items-center justify-center text-center space-y-4 shrink-0 hidden lg:flex">
+      <aside className="w-96 bg-gray-950 border-l border-gray-800/80 p-6 flex flex-col items-center justify-center text-center space-y-4 shrink-0 h-full hidden lg:flex">
         <HelpCircle className="w-12 h-12 text-gray-700 animate-bounce" />
         <h3 className="text-sm font-bold text-gray-300">Analysis Panel</h3>
         <p className="text-xs text-gray-500 leading-relaxed max-w-[200px]">

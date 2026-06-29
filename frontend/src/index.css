@@ -3,42 +3,42 @@
 @variant light (.light &);
 
 @theme {
-  /* Override Default Gray, Slate, and Zinc scales to match #2B2F36 dark palette */
-  --color-gray-50: #F2F2F2;
-  --color-gray-100: #F2F2F2; /* Primary Text */
-  --color-gray-200: #D1D5DB; /* Brighter Secondary Text for Dark Mode */
-  --color-gray-300: #B6BDC8;
-  --color-gray-400: #6D7C93; /* Muted Blue/Grey */
-  --color-gray-500: #6D7C93;
-  --color-gray-600: #4A515C; /* Borders */
-  --color-gray-700: #3E444D; /* Card Background */
-  --color-gray-800: #353A42; /* Secondary Surface */
-  --color-gray-900: #2B2F36; /* Primary Background */
-  --color-gray-950: #1C1E22; /* Deeper Background for sidebar / inputs */
+  /* Override Default Gray, Slate, and Zinc scales to match #121315 rich dark palette */
+  --color-gray-50: #F9FAFB;
+  --color-gray-100: #F3F4F6; /* Primary Text */
+  --color-gray-200: #E5E7EB; /* Brighter Secondary Text for Dark Mode */
+  --color-gray-300: #D1D5DB; /* Tertiary Text */
+  --color-gray-400: #9CA3AF; /* Muted Text */
+  --color-gray-500: #6B7280;
+  --color-gray-600: #2B2D31; /* Borders (defined but subtle) */
+  --color-gray-700: #1F2023; /* Card Background */
+  --color-gray-800: #18191B; /* Secondary Surface (Navbar, Sidebar) */
+  --color-gray-900: #121315; /* Primary Background */
+  --color-gray-950: #0E0F10; /* Deeper Input Background */
 
-  --color-slate-50: #F2F2F2;
-  --color-slate-100: #F2F2F2;
-  --color-slate-200: #D1D5DB;
-  --color-slate-300: #B6BDC8;
-  --color-slate-400: #6D7C93;
-  --color-slate-500: #6D7C93;
-  --color-slate-600: #4A515C;
-  --color-slate-700: #3E444D;
-  --color-slate-800: #353A42;
-  --color-slate-900: #2B2F36;
-  --color-slate-950: #1C1E22;
+  --color-slate-50: #F9FAFB;
+  --color-slate-100: #F3F4F6;
+  --color-slate-200: #E5E7EB;
+  --color-slate-300: #D1D5DB;
+  --color-slate-400: #9CA3AF;
+  --color-slate-500: #6B7280;
+  --color-slate-600: #2B2D31;
+  --color-slate-700: #1F2023;
+  --color-slate-800: #18191B;
+  --color-slate-900: #121315;
+  --color-slate-950: #0E0F10;
 
-  --color-zinc-50: #F2F2F2;
-  --color-zinc-100: #F2F2F2;
-  --color-zinc-200: #D1D5DB;
-  --color-zinc-300: #B6BDC8;
-  --color-zinc-400: #6D7C93;
-  --color-zinc-500: #6D7C93;
-  --color-zinc-600: #4A515C;
-  --color-zinc-700: #3E444D;
-  --color-zinc-800: #353A42;
-  --color-zinc-900: #2B2F36;
-  --color-zinc-950: #1C1E22;
+  --color-zinc-50: #F9FAFB;
+  --color-zinc-100: #F3F4F6;
+  --color-zinc-200: #E5E7EB;
+  --color-zinc-300: #D1D5DB;
+  --color-zinc-400: #9CA3AF;
+  --color-zinc-500: #6B7280;
+  --color-zinc-600: #2B2D31;
+  --color-zinc-700: #1F2023;
+  --color-zinc-800: #18191B;
+  --color-zinc-900: #121315;
+  --color-zinc-950: #0E0F10;
 
   /* Font size definitions scaled up for typography hierarchy and readability */
   --font-size-xs: 0.8125rem;    /* ~13px */
@@ -68,24 +68,24 @@
   --color-emerald-700: #A7E45F;
 
   /* Component tokens */
-  --color-dark-bg: #2B2F36;
-  --color-dark-card: #3E444D;
-  --color-dark-border: #4A515C;
-  --color-dark-input: #353A42;
+  --color-dark-bg: #121315;
+  --color-dark-card: #1F2023;
+  --color-dark-border: #2B2D31;
+  --color-dark-input: #18191B;
   
   --color-brand-primary: #B7F36B;
   --color-brand-secondary: #B7F36B;
   --color-brand-warning: #f59e0b;
   --color-brand-error: #ef4444;
-  --color-brand-text: #F2F2F2;
-  --color-brand-muted: #B6BDC8;
+  --color-brand-text: #F3F4F6;
+  --color-brand-muted: #D1D5DB;
 }
 
 @layer base {
   body {
     font-family: 'Outfit', 'Inter', sans-serif;
-    background-color: #2B2F36;
-    color: #F2F2F2;
+    background-color: #121315;
+    color: #F3F4F6;
     overflow-x: hidden;
   }
   
@@ -114,9 +114,9 @@ header.sticky {
 
 .dark header.sticky,
 header.sticky {
-  background-color: #1E2127 !important; /* Slightly darker than page background #2B2F36 */
-  border-bottom: 1px solid #353A42 !important; /* Subtle bottom border */
-  box-shadow: 0 4px 12px -2px rgba(0, 0, 0, 0.25), 0 2px 4px -1px rgba(0, 0, 0, 0.15) !important; /* Elevation shadow */
+  background-color: #18191B !important; /* Rich obsidian black navbar */
+  border-bottom: 1px solid #2B2D31 !important; /* Definitive bottom border */
+  box-shadow: 0 4px 12px -2px rgba(0, 0, 0, 0.4) !important; /* Confident soft elevation */
 }
 
 /* ==========================================
@@ -312,27 +312,92 @@ header.sticky {
 }
 
 /* ==========================================
+   Button and Element Contrast Adjustments
+   ========================================== */
+.bg-indigo-600,
+.bg-indigo-500,
+.bg-brand-primary,
+.bg-\[\#B7F36B\],
+button.bg-indigo-600,
+button.bg-indigo-500,
+button.bg-emerald-500,
+button.bg-emerald-600 {
+  color: #1C1E22 !important; /* High contrast dark text on bright green buttons */
+  font-weight: 600 !important;
+}
+
+.bg-indigo-600 *,
+.bg-indigo-500 *,
+.bg-brand-primary *,
+button.bg-indigo-600 *,
+button.bg-indigo-500 * {
+  color: #1C1E22 !important; /* High contrast dark icons on bright green buttons */
+}
+
+/* User message bubble text accessibility contrast */
+.bg-indigo-600 {
+  color: #1C1E22 !important; 
+}
+
+.bg-indigo-600 span.text-gray-500 {
+  color: #353A42 !important;
+  opacity: 0.8;
+}
+
+/* Chat Input area textarea styling overrides */
+form textarea {
+  font-size: 15px !important;
+  line-height: 1.5 !important;
+  padding: 0.5rem 0.25rem !important;
+}
+
+.light form textarea {
+  color: #1F2937 !important;
+}
+
+/* Chat bubbles visual balance and spacing */
+.max-w-3xl.mx-auto.space-y-6 > div {
+  margin-bottom: 1.5rem !important; /* Visual breathing room between messages */
+}
+
+/* User and AI bubbles */
+.max-w-3xl.mx-auto.space-y-6 div.max-w-\[85\%\] {
+  max-w-[78%] !important;
+  padding: 1.25rem 1.5rem !important; /* Premium internal padding */
+  border-radius: 16px !important;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05) !important;
+}
+
+.max-w-3xl.mx-auto.space-y-6 div.rounded-br-none {
+  border-bottom-right-radius: 4px !important;
+}
+
+.max-w-3xl.mx-auto.space-y-6 div.rounded-bl-none {
+  border-bottom-left-radius: 4px !important;
+}
+
+/* ==========================================
    Hardcoded Hex Class Overrides (Dark Mode)
    ========================================== */
 .bg-\[\#090d16\] {
-  background-color: #2B2F36 !important;
+  background-color: #121315 !important;
 }
 
 .bg-\[\#090d16\]\/80 {
-  background-color: rgba(43, 47, 54, 0.8) !important;
+  background-color: rgba(18, 19, 21, 0.8) !important;
 }
 
 .bg-\[\#090d16\]\/40 {
-  background-color: rgba(43, 47, 54, 0.4) !important;
+  background-color: rgba(18, 19, 21, 0.4) !important;
 }
 
 .bg-\[\#0b0f19\] {
-  background-color: #2B2F36 !important;
+  background-color: #121315 !important;
 }
 
 .bg-\[\#0d1117\] {
-  background-color: #353A42 !important;
-  border-color: #4A515C !important;
+  background-color: #18191B !important;
+  border-color: #2B2D31 !important;
 }
 
 /* Custom Scrollbar matching Dark Gray palette */
@@ -342,34 +407,34 @@ header.sticky {
 }
 
 ::-webkit-scrollbar-track {
-  background: #2B2F36;
+  background: #121315;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #4A515C;
+  background: #2B2D31;
   border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #454C56;
+  background: #37393D;
 }
 
 /* Interactive transitions and custom layout consistencies */
 .hover\:bg-gray-800:hover {
-  background-color: #454C56 !important;
+  background-color: #242528 !important;
 }
 
 .hover\:bg-gray-700:hover {
-  background-color: #454C56 !important;
+  background-color: #242528 !important;
 }
 
 .hover\:text-white:hover {
-  color: #F2F2F2 !important;
+  color: #F3F4F6 !important;
 }
 
 /* Inputs border contrasts and active outlines in dark theme */
 input, textarea, select {
-  border: 1px solid #4A515C !important;
+  border: 1px solid #2B2D31 !important;
   box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05) !important;
 }
 
@@ -380,7 +445,7 @@ input:focus, textarea:focus, select:focus {
 /* Selection style configurations */
 ::selection {
   background-color: #B7F36B;
-  color: #2B2F36;
+  color: #121315;
 }
 
 button:disabled {
@@ -409,4 +474,26 @@ button:disabled {
 
 .prose li {
   margin-bottom: 0.35rem;
+}
+
+/* Premium Dark Mode Cards & Buttons Definition */
+.bg-dark-card,
+.bg-gray-900\/80,
+.bg-gray-800\/80 {
+  background-color: #1F2023 !important;
+  border: 1px solid #2B2D31 !important;
+  box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.25), 0 2px 4px -1px rgba(0, 0, 0, 0.15) !important;
+}
+
+/* Faded gray buttons overrides in dark mode */
+.bg-gray-900,
+.bg-gray-800 {
+  background-color: #1F2023 !important;
+  border: 1px solid #2B2D31 !important;
+}
+
+button.bg-gray-900:hover,
+button.bg-gray-800:hover {
+  background-color: #282A2E !important;
+  border-color: #3E4146 !important;
 }

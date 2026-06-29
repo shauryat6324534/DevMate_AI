@@ -38,6 +38,134 @@ const parseMessageContent = (text) => {
   return parts;
 };
 
+const renderMarkdown = (text) => {
+  if (!text) return null;
+
+  const lines = text.split('\n');
+  const elements = [];
+  let listItems = [];
+  let inList = false;
+
+  const flushList = (key) => {
+    if (listItems.length > 0) {
+      elements.push(
+        <ul key={`ul-${key}`} className="list-disc pl-6 space-y-1.5 my-3 text-sm text-gray-300 light:text-gray-600">
+          {listItems}
+        </ul>
+      );
+      listItems = [];
+      inList = false;
+    }
+  };
+
+  const parseInlineElements = (lineText) => {
+    const parts = [];
+    const inlineRegex = /(\*\*|`)(.*?)\1/g;
+    let lastIdx = 0;
+    let match;
+
+    while ((match = inlineRegex.exec(lineText)) !== null) {
+      if (match.index > lastIdx) {
+        parts.push(lineText.substring(lastIdx, match.index));
+      }
+      const type = match[1];
+      const content = match[2];
+      if (type === '`') {
+        parts.push(
+          <code key={`code-${match.index}`} className="px-1.5 py-0.5 rounded bg-gray-950/40 text-brand-primary font-mono text-[13px] border border-gray-800/40 light:bg-gray-100 light:text-indigo-600 light:border-gray-200">
+            {content}
+          </code>
+        );
+      } else if (type === '**') {
+        parts.push(
+          <strong key={`strong-${match.index}`} className="font-bold text-gray-100 light:text-gray-900">
+            {content}
+          </strong>
+        );
+      }
+      lastIdx = inlineRegex.lastIndex;
+    }
+
+    if (lastIdx < lineText.length) {
+      parts.push(lineText.substring(lastIdx));
+    }
+
+    return parts.length > 0 ? parts : [lineText];
+  };
+
+  for (let i = 0; i < lines.length; i++) {
+    const line = lines[i];
+    const trimmed = line.trim();
+
+    if (trimmed.startsWith('# ')) {
+      flushList(i);
+      const headingText = trimmed.substring(2);
+      elements.push(
+        <h1 key={`h1-${i}`} className="text-2xl font-bold tracking-tight text-white light:text-gray-900 mt-6 mb-3 border-b border-gray-800/40 pb-2 light:border-gray-200 leading-tight">
+          {parseInlineElements(headingText)}
+        </h1>
+      );
+    } else if (trimmed.startsWith('## ')) {
+      flushList(i);
+      const headingText = trimmed.substring(3);
+      elements.push(
+        <h2 key={`h2-${i}`} className="text-xl font-bold tracking-tight text-white light:text-gray-900 mt-5 mb-2.5 leading-snug">
+          {parseInlineElements(headingText)}
+        </h2>
+      );
+    } else if (trimmed.startsWith('### ')) {
+      flushList(i);
+      const headingText = trimmed.substring(4);
+      elements.push(
+        <h3 key={`h3-${i}`} className="text-lg font-bold tracking-tight text-white light:text-gray-900 mt-4 mb-2">
+          {parseInlineElements(headingText)}
+        </h3>
+      );
+    } else if (trimmed.startsWith('#### ')) {
+      flushList(i);
+      const headingText = trimmed.substring(5);
+      elements.push(
+        <h4 key={`h4-${i}`} className="text-base font-bold text-gray-200 light:text-gray-800 mt-3 mb-1.5">
+          {parseInlineElements(headingText)}
+        </h4>
+      );
+    } else if (trimmed.startsWith('- ') || trimmed.startsWith('* ')) {
+      inList = true;
+      const bulletText = trimmed.substring(2);
+      listItems.push(
+        <li key={`li-${i}-${listItems.length}`} className="leading-relaxed">
+          {parseInlineElements(bulletText)}
+        </li>
+      );
+    } else if (trimmed.startsWith('> ')) {
+      flushList(i);
+      const quoteText = trimmed.substring(2);
+      elements.push(
+        <blockquote key={`quote-${i}`} className="pl-4 border-l-4 border-indigo-500/50 italic text-gray-400 light:text-gray-500 my-4 py-1 bg-gray-900/10 rounded-r-lg light:bg-gray-100/50">
+          {parseInlineElements(quoteText)}
+        </blockquote>
+      );
+    } else if (trimmed === '---' || trimmed === '***') {
+      flushList(i);
+      elements.push(
+        <hr key={`hr-${i}`} className="border-t border-gray-800/40 my-6 light:border-gray-200" />
+      );
+    } else if (trimmed === '') {
+      flushList(i);
+    } else {
+      flushList(i);
+      elements.push(
+        <p key={`p-${i}`} className="text-sm text-gray-300 light:text-gray-600 leading-relaxed mb-3">
+          {parseInlineElements(line)}
+        </p>
+      );
+    }
+  }
+
+  flushList('final');
+  return elements;
+};
+
 export const ChatWorkspace = ({ 
   messages, 
   loading, 
@@ -167,7 +295,7 @@ export const ChatWorkspace = ({
                           </div>
                         );
                       }
-                      return <p key={pIdx} className="text-gray-300">{part.content}</p>;
+                      return <div key={pIdx} className="space-y-1">{renderMarkdown(part.content)}</div>;
                     })}
                   </div>
                 </div>
