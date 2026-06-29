@@ -3,10 +3,10 @@
 @variant light (.light &);
 
 @theme {
-  /* Override Default Gray, Slate, and Zinc scales to match #2B2F36 palette */
+  /* Override Default Gray, Slate, and Zinc scales to match #2B2F36 dark palette */
   --color-gray-50: #F2F2F2;
   --color-gray-100: #F2F2F2; /* Primary Text */
-  --color-gray-200: #B6BDC8; /* Secondary Text */
+  --color-gray-200: #D1D5DB; /* Brighter Secondary Text for Dark Mode */
   --color-gray-300: #B6BDC8;
   --color-gray-400: #6D7C93; /* Muted Blue/Grey */
   --color-gray-500: #6D7C93;
@@ -18,7 +18,7 @@
 
   --color-slate-50: #F2F2F2;
   --color-slate-100: #F2F2F2;
-  --color-slate-200: #B6BDC8;
+  --color-slate-200: #D1D5DB;
   --color-slate-300: #B6BDC8;
   --color-slate-400: #6D7C93;
   --color-slate-500: #6D7C93;
@@ -30,7 +30,7 @@
 
   --color-zinc-50: #F2F2F2;
   --color-zinc-100: #F2F2F2;
-  --color-zinc-200: #B6BDC8;
+  --color-zinc-200: #D1D5DB;
   --color-zinc-300: #B6BDC8;
   --color-zinc-400: #6D7C93;
   --color-zinc-500: #6D7C93;
@@ -39,6 +39,16 @@
   --color-zinc-800: #353A42;
   --color-zinc-900: #2B2F36;
   --color-zinc-950: #1C1E22;
+
+  /* Font size definitions scaled up for typography hierarchy and readability */
+  --font-size-xs: 0.8125rem;    /* ~13px */
+  --font-size-sm: 0.9375rem;    /* 15px - Placeholders / Sidebar items / Buttons */
+  --font-size-base: 1.0625rem;  /* 17px - Body Text / Inputs / Analysis Panel */
+  --font-size-lg: 1.25rem;      /* 20px - Card Titles */
+  --font-size-xl: 1.375rem;     /* 22px */
+  --font-size-2xl: 1.625rem;    /* 26px - Section Headings */
+  --font-size-3xl: 2rem;        /* 32px */
+  --font-size-4xl: 2.75rem;     /* 44px - Page Headings */
 
   /* Map Indigo (the main brand color in components) to Accent Green */
   --color-indigo-50: #f4fce3;
@@ -78,69 +88,192 @@
     color: #F2F2F2;
     overflow-x: hidden;
   }
+  
+  /* Apply consistent focus states across elements for accessibility */
+  button:focus-visible,
+  input:focus-visible,
+  textarea:focus-visible,
+  select:focus-visible {
+    outline: 2px solid #B7F36B !important;
+    outline-offset: 2px;
+  }
+
+  /* Tactile feeling for button elements */
+  button:active:not(:disabled) {
+    transform: scale(0.98) !important;
+  }
 }
 
-/* Light Mode Overrides */
+/* ==========================================
+   Premium Warm-Neutral Light Theme Overrides
+   Inspired by Notion, Linear, Stripe, and GitHub
+   ========================================== */
 .light, .light body {
-  background-color: #f9fafb !important;
-  color: #111827 !important;
+  background-color: #F4F5F7 !important; /* Off-white warm neutral page background */
+  color: #1F2937 !important;            /* High contrast dark text */
 }
 
+/* Navbar: #FCFCFD, subtle shadow and bottom border */
 .light header {
-  background-color: rgba(255, 255, 255, 0.8) !important;
-  border-color: #e5e7eb !important;
+  background-color: #FCFCFD !important;
+  border-color: #E5E7EB !important;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.02) !important;
 }
 
-.light header span.text-white {
-  color: #111827 !important;
-}
-
+.light header span,
 .light header button,
 .light header div {
-  color: #374151 !important;
+  color: #1F2937 !important;
 }
 
+/* Sidebar: #FCFCFD, right border divider, clear elevation */
 .light aside {
-  background-color: #ffffff !important;
-  border-color: #e5e7eb !important;
-  color: #374151 !important;
+  background-color: #FCFCFD !important;
+  border-color: #E5E7EB !important;
+  box-shadow: 1px 0 2px 0 rgba(0, 0, 0, 0.01) !important;
 }
 
 .light aside button,
 .light aside div,
-.light aside span {
-  color: #374151 !important;
+.light aside span,
+.light aside h2 {
+  color: #1F2937 !important;
 }
 
+/* Sidebar conversations list: Elegant hover and selected states */
+.light aside button:hover {
+  background-color: #F1F3F5 !important;
+}
+
+.light aside .bg-gray-800\/60,
+.light aside .bg-gray-800 {
+  background-color: rgba(183, 243, 107, 0.15) !important; /* Soft green tint selection background */
+  border-left: 3px solid #B7F36B !important;              /* High-end selected indicator */
+  border-radius: 0 8px 8px 0 !important;
+  color: #1F2937 !important;
+}
+
+.light aside .bg-gray-800\/60 *,
+.light aside .bg-gray-800 * {
+  color: #1F2937 !important;
+}
+
+/* Workspace main content body panels */
 .light .flex-1.bg-\[\#0b0f19\],
-.light .bg-\[\#2B2F36\] {
-  background-color: #f3f4f6 !important;
+.light .bg-\[\#2B2F36\],
+.light main {
+  background-color: #F7F8FA !important; /* Soft warm workspace color */
 }
 
+/* Premium Card container style configurations */
 .light .bg-gray-900\/80,
-.light .bg-\[\#2B2F36\]\/80 {
-  background-color: #ffffff !important;
-  border-color: #e5e7eb !important;
-  color: #111827 !important;
+.light .bg-gray-800\/80,
+.light .bg-\[\#2B2F36\]\/80,
+.light .bg-gray-900,
+.light .bg-gray-800,
+.light .bg-gray-700,
+.light .bg-dark-card,
+.light .bg-\[\#3E444D\] {
+  background-color: #FFFFFF !important;  /* Elegant pure white card surface */
+  border: 1px solid #E5E7EB !important;  /* Soft layout borders */
+  color: #1F2937 !important;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.04), 0 1px 2px 0 rgba(0, 0, 0, 0.02) !important; /* Soft depth shadow */
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1) !important;
 }
 
+/* Hover elevation transitions for interactive cards */
+.light .bg-gray-900\/80:hover,
+.light .bg-gray-800\/80:hover,
+.light .bg-\[\#2B2F36\]\/80:hover,
+.light .bg-gray-800:hover,
+.light .bg-dark-card:hover {
+  transform: translateY(-1px) !important;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.06), 0 2px 4px -1px rgba(0, 0, 0, 0.03) !important;
+}
+
+/* Form controls inputs, selects and textareas */
+.light input,
+.light textarea,
+.light select,
+.light .bg-gray-950 {
+  background-color: #FFFFFF !important;
+  border: 1px solid #E5E7EB !important;
+  color: #1F2937 !important;
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.01) !important;
+}
+
+.light input::placeholder,
+.light textarea::placeholder {
+  color: #6D7C93 !important; /* Premium visible contrast */
+}
+
+/* Visual selection highlights and scrollbars */
+.light ::selection {
+  background-color: rgba(183, 243, 107, 0.35) !important;
+  color: #1F2937 !important;
+}
+
+.light ::-webkit-scrollbar-track {
+  background: #F7F8FA !important;
+}
+
+.light ::-webkit-scrollbar-thumb {
+  background: #E5E7EB !important;
+}
+
+.light ::-webkit-scrollbar-thumb:hover {
+  background: #D1D5DB !important;
+}
+
+/* Text styles contrast scaling rules */
+.light .text-gray-100,
+.light .text-gray-200,
 .light .text-gray-300,
-.light .text-gray-200 {
-  color: #1f2937 !important;
+.light .text-white {
+  color: #1F2937 !important;
 }
 
 .light .text-gray-400,
-.light .text-gray-500 {
-  color: #4b5563 !important;
+.light .text-gray-500,
+.light .text-brand-muted {
+  color: #4B5563 !important;
 }
 
-.light pre {
-  background-color: #f3f4f6 !important;
-  border-color: #e5e7eb !important;
-  color: #111827 !important;
+/* Pre-formatted code blocks readability configuration */
+.light pre,
+.light code,
+.light .bg-\[\#0d1117\],
+.light .bg-\[\#353A42\],
+.light .font-mono {
+  background-color: #F6F7F9 !important; /* Soft warm gray block background */
+  border-color: #E5E7EB !important;
+  color: #1F2937 !important;
 }
 
-/* Hardcoded hex overrides for new professional dark UI */
+.light .border-b-2.border-indigo-500,
+.light .border-b-2.border-brand-primary {
+  border-color: #B7F36B !important;
+}
+
+.light label {
+  color: #1F2937 !important;
+}
+
+/* Tactile button layouts inside light theme */
+.light button:not(:disabled) {
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.04) !important;
+}
+
+.light button.bg-indigo-600,
+.light button.bg-brand-primary,
+.light button.bg-\[\#B7F36B\] {
+  color: #1C1E22 !important;
+  font-weight: 550 !important;
+}
+
+/* ==========================================
+   Hardcoded Hex Class Overrides (Dark Mode)
+   ========================================== */
 .bg-\[\#090d16\] {
   background-color: #2B2F36 !important;
 }
@@ -159,15 +292,10 @@
 
 .bg-\[\#0d1117\] {
   background-color: #353A42 !important;
+  border-color: #4A515C !important;
 }
 
-/* Selection styles */
-::selection {
-  background-color: #B7F36B;
-  color: #2B2F36;
-}
-
-/* Custom Scrollbar matching Gray palette */
+/* Custom Scrollbar matching Dark Gray palette */
 ::-webkit-scrollbar {
   width: 8px;
   height: 8px;
@@ -186,7 +314,7 @@
   background: #454C56;
 }
 
-/* Hover class overrides */
+/* Interactive transitions and custom layout consistencies */
 .hover\:bg-gray-800:hover {
   background-color: #454C56 !important;
 }
@@ -195,8 +323,49 @@
   background-color: #454C56 !important;
 }
 
-/* Accent element color corrections */
+.hover\:text-white:hover {
+  color: #F2F2F2 !important;
+}
+
+/* Inputs border contrasts and active outlines in dark theme */
+input, textarea, select {
+  border: 1px solid #4A515C !important;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05) !important;
+}
+
+input:focus, textarea:focus, select:focus {
+  border-color: #B7F36B !important;
+}
+
+/* Selection style configurations */
+::selection {
+  background-color: #B7F36B;
+  color: #2B2F36;
+}
+
 button:disabled {
   opacity: 0.5;
   cursor: not-allowed;
+}
+
+/* Markdown parsing typography styling (Chat workspace readability) */
+.prose h1, .prose h2, .prose h3, .prose h4 {
+  color: inherit !important;
+  font-weight: 600 !important;
+  margin-top: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+.prose p {
+  margin-bottom: 0.75rem;
+  line-height: 1.625;
+}
+
+.prose ul, .prose ol {
+  padding-left: 1.5rem;
+  margin-bottom: 0.75rem;
+}
+
+.prose li {
+  margin-bottom: 0.25rem;
 }
